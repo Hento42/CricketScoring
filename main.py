@@ -85,7 +85,7 @@ class GUI():
                         running = False
                         pygame.quit()
                         time.sleep(0.5)
-                        startScoring()
+                        startScoring(gameType.selected_option[0], maxWickets.get_current_value(), maxOvers.get_current_value(), wicketRuns.get_current_value(), startingRuns.selected_option[0], bowlAgain.selected_option[0], extraRuns.selected_option[0])
                     
                 manager.process_events(event)
                     
