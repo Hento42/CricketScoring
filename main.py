@@ -1,5 +1,5 @@
 import pygame_gui, pygame, time, sys
-from scoring import *
+from scorePage import *
 
 class Settings:
 
