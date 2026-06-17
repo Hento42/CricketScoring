@@ -4,8 +4,8 @@ from scorePage import *
 class Settings:
 
     def __init__(self):
-        self.screen_width = 400
-        self.screen_height = 725
+        self.screen_width = 425
+        self.screen_height = 650
         self.bg_color = ("#141821")
 
 
@@ -51,13 +51,16 @@ class GUI():
         startingLabel = pygame_gui.elements.UITextBox(html_text="Starting Runs:", relative_rect=pygame.Rect((15,395), (200,40)), manager=manager)
         startingRuns = pygame_gui.elements.UIDropDownMenu(options_list=("0", "100", "200"), starting_option="0", relative_rect=pygame.Rect((15, 425), (200, 50)), manager=manager)
 
-        bowlAgainLabel = pygame_gui.elements.UITextBox(html_text="Bowl Extras Again?", relative_rect=pygame.Rect((15,485), (200,40)), manager=manager)
-        bowlAgain = pygame_gui.elements.UIDropDownMenu(options_list=("Yes", "No", "Last Over Only"), starting_option="Yes", relative_rect=pygame.Rect((15, 515), (200, 50)), manager=manager)
+        inningsLabel = pygame_gui.elements.UITextBox(html_text="Number of innings:", relative_rect=pygame.Rect((215,395), (200,40)), manager=manager)
+        inningsNum = pygame_gui.elements.UIDropDownMenu(options_list=("1", "2"), starting_option="1", relative_rect=pygame.Rect((215, 425), (200, 50)), manager=manager)
+
+        bowlAgainLabel = pygame_gui.elements.UITextBox(html_text="Bowl Extras Again?", relative_rect=pygame.Rect((15,490), (200,40)), manager=manager)
+        bowlAgain = pygame_gui.elements.UIDropDownMenu(options_list=("Yes", "No", "Last Over Only"), starting_option="Yes", relative_rect=pygame.Rect((15, 520), (200, 50)), manager=manager)
         
-        extraLabel = pygame_gui.elements.UITextBox(html_text="Runs For Extras:", relative_rect=pygame.Rect((15,575), (200,40)), manager=manager)
-        extraRuns = pygame_gui.elements.UIDropDownMenu(options_list=("0", "1", "2"), starting_option="0", relative_rect=pygame.Rect((15, 605), (200, 50)), manager=manager)
+        extraLabel = pygame_gui.elements.UITextBox(html_text="Runs For Extras:", relative_rect=pygame.Rect((215,490), (200,40)), manager=manager)
+        extraRuns = pygame_gui.elements.UIDropDownMenu(options_list=("0", "1", "2"), starting_option="0", relative_rect=pygame.Rect((215, 520), (200, 50)), manager=manager)
         
-        start = pygame_gui.elements.UIButton(text="Start Scoring", relative_rect=pygame.Rect((15,665), (200, 45)))
+        start = pygame_gui.elements.UIButton(text="Start Scoring", relative_rect=pygame.Rect((15,585), (400, 50)))
         
         
         manager.draw_ui(disp)
@@ -85,7 +88,8 @@ class GUI():
                         running = False
                         pygame.quit()
                         time.sleep(0.5)
-                        startScoring(gameType.selected_option[0], maxWickets.get_current_value(), maxOvers.get_current_value(), wicketRuns.get_current_value(), startingRuns.selected_option[0], bowlAgain.selected_option[0], extraRuns.selected_option[0])
+                        startScoring(gameType.selected_option[0], maxWickets.get_current_value(), maxOvers.get_current_value(), wicketRuns.get_current_value(), 
+                                     startingRuns.selected_option[0], inningsNum.selected_option[0], bowlAgain.selected_option[0], extraRuns.selected_option[0])
                     
                 manager.process_events(event)
                     

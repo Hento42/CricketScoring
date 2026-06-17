@@ -48,7 +48,7 @@ class GUI():
                     
         
  
-def startScoring(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, bowlAgain, extraRuns):
-    print(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, bowlAgain, extraRuns)       
+def startScoring(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, inningsNum, bowlAgain, extraRuns):
+    print(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, inningsNum, bowlAgain, extraRuns)       
     scorePage = GUI()
     scorePage.run_start()

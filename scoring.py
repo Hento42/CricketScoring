@@ -1,4 +1,4 @@
-def scoring(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, bowlAgain, extraRuns):
+def scoring(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, inningsNum, bowlAgain, extraRuns):
     
     previousScore = 0
     previousWickets = 0
