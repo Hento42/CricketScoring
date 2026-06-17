@@ -5,7 +5,7 @@ class Settings:
 
     def __init__(self):
         self.screen_width = 400
-        self.screen_height = 800
+        self.screen_height = 725
         self.bg_color = ("#141821")
 
 
@@ -37,27 +37,27 @@ class GUI():
         gameType = pygame_gui.elements.UIDropDownMenu(options_list=("Fixed Wickets", "Fixed Overs", "Hundred"), starting_option="Fixed Wickets", relative_rect=pygame.Rect((15, 45), (200, 50)), manager=manager)
         
         wicketLabel = pygame_gui.elements.UITextBox(html_text="Available Wickets:", relative_rect=pygame.Rect((15,110), (200,40)), manager=manager)
-        maxWickets = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((15, 140), (200, 75)), start_value=0, value_range=(0,10), manager=manager)
-        wicketText = pygame_gui.elements.UITextBox(html_text=str(maxWickets.get_current_value()), relative_rect=pygame.Rect((215, 140), (50, 75)), manager=manager)
+        maxWickets = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((15, 140), (200, 50)), start_value=0, value_range=(0,10), manager=manager)
+        wicketText = pygame_gui.elements.UITextBox(html_text=str(maxWickets.get_current_value()), relative_rect=pygame.Rect((215, 140), (40, 50)), manager=manager)
         
-        overLabel = pygame_gui.elements.UITextBox(html_text="Available Overs:", relative_rect=pygame.Rect((15,230), (200,40)), manager=manager)
-        maxOvers = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((15, 260), (200, 75)), start_value=0, value_range=(0,50), manager=manager)
-        overText = pygame_gui.elements.UITextBox(html_text=str(maxOvers.get_current_value()), relative_rect=pygame.Rect((215, 260), (50, 75)), manager=manager)
+        overLabel = pygame_gui.elements.UITextBox(html_text="Available Overs:", relative_rect=pygame.Rect((15,205), (200,40)), manager=manager)
+        maxOvers = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((15, 235), (200, 50)), start_value=0, value_range=(0,50), manager=manager)
+        overText = pygame_gui.elements.UITextBox(html_text=str(maxOvers.get_current_value()), relative_rect=pygame.Rect((215, 235), (40, 50)), manager=manager)
         
-        runLabel = pygame_gui.elements.UITextBox(html_text="Runs Lost Per Wicket:", relative_rect=pygame.Rect((15,350), (200,40)), manager=manager)
-        wicketRuns = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((15, 380), (200, 75)), start_value=0, value_range=(0,10), manager=manager)
-        runText = pygame_gui.elements.UITextBox(html_text=str(wicketRuns.get_current_value()), relative_rect=pygame.Rect((215, 380), (50, 75)), manager=manager)
+        runLabel = pygame_gui.elements.UITextBox(html_text="Runs Lost Per Wicket:", relative_rect=pygame.Rect((15,300), (200,40)), manager=manager)
+        wicketRuns = pygame_gui.elements.UIHorizontalSlider(relative_rect=pygame.Rect((15, 330), (200, 50)), start_value=0, value_range=(0,10), manager=manager)
+        runText = pygame_gui.elements.UITextBox(html_text=str(wicketRuns.get_current_value()), relative_rect=pygame.Rect((215, 330), (40, 50)), manager=manager)
         
-        startingLabel = pygame_gui.elements.UITextBox(html_text="Starting Runs:", relative_rect=pygame.Rect((15,470), (200,40)), manager=manager)
-        startingRuns = pygame_gui.elements.UIDropDownMenu(options_list=("0", "100", "200"), starting_option="0", relative_rect=pygame.Rect((15, 500), (200, 50)), manager=manager)
+        startingLabel = pygame_gui.elements.UITextBox(html_text="Starting Runs:", relative_rect=pygame.Rect((15,395), (200,40)), manager=manager)
+        startingRuns = pygame_gui.elements.UIDropDownMenu(options_list=("0", "100", "200"), starting_option="0", relative_rect=pygame.Rect((15, 425), (200, 50)), manager=manager)
 
-        bowlAgainLabel = pygame_gui.elements.UITextBox(html_text="Bowl Extras Again?", relative_rect=pygame.Rect((15,560), (200,40)), manager=manager)
-        bowlAgain = pygame_gui.elements.UIDropDownMenu(options_list=("Yes", "No", "Last Over Only"), starting_option="Yes", relative_rect=pygame.Rect((15, 590), (200, 50)), manager=manager)
+        bowlAgainLabel = pygame_gui.elements.UITextBox(html_text="Bowl Extras Again?", relative_rect=pygame.Rect((15,485), (200,40)), manager=manager)
+        bowlAgain = pygame_gui.elements.UIDropDownMenu(options_list=("Yes", "No", "Last Over Only"), starting_option="Yes", relative_rect=pygame.Rect((15, 515), (200, 50)), manager=manager)
         
-        extraLabel = pygame_gui.elements.UITextBox(html_text="Runs For Extras:", relative_rect=pygame.Rect((15,650), (200,40)), manager=manager)
-        extraRuns = pygame_gui.elements.UIDropDownMenu(options_list=("0", "1", "2"), starting_option="0", relative_rect=pygame.Rect((15, 680), (200, 50)), manager=manager)
+        extraLabel = pygame_gui.elements.UITextBox(html_text="Runs For Extras:", relative_rect=pygame.Rect((15,575), (200,40)), manager=manager)
+        extraRuns = pygame_gui.elements.UIDropDownMenu(options_list=("0", "1", "2"), starting_option="0", relative_rect=pygame.Rect((15, 605), (200, 50)), manager=manager)
         
-        start = pygame_gui.elements.UIButton(text="Start Scoring", relative_rect=pygame.Rect((15,740), (200, 45)))
+        start = pygame_gui.elements.UIButton(text="Start Scoring", relative_rect=pygame.Rect((15,665), (200, 45)))
         
         
         manager.draw_ui(disp)
