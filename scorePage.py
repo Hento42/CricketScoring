@@ -32,8 +32,11 @@ class GUI():
         clock = pygame.time.Clock()
         running = True
 
-        #pygame.draw.line(disp, (255,255,255), (500,0), (500, 750), 5)
         pygame.draw.rect(disp, (255,255,255), (505,5, 990, 740), 5)
+        
+        minus = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((15,15), (50,50)), text="+1", manager=manager)
+        runs = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((65,15), (50,50)), text = "0", manager=manager)
+        plus = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((115,15), (50,50)), text="-1", manager=manager)
         
         manager.draw_ui(disp)
         pygame.display.update()
@@ -41,10 +44,16 @@ class GUI():
         while running:
 
             time_delta = clock.tick(60)/1000.0
+            manager.update(time_delta)
+            disp.fill(self.settings.bg_color)
+            manager.draw_ui(disp)
+            pygame.display.update()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                    
+                manager.process_events(event)
                     
         
  
