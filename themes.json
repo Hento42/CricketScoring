@@ -1,13 +1,6 @@
 {
     "button":
     {
-        "font":
-        {
-            "name": "Arial",
-            "size": 30,
-            "bold": 1
-        },
-
         "misc":
         {
             "shape": "rounded_rectangle",

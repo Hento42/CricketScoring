@@ -46,6 +46,27 @@ class GUI():
         bye = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,170), (20,20)), text="Byes", manager=manager)
         wicket = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,195), (20,20)), text="Wicket", manager=manager)
 
+        pygame.draw.line(disp, "#25292e", (15, 240), (290, 240), 5)
+
+        bowled = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,250), (20,20)), text="Bowled", manager=manager)
+        caught = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,275), (20,20)), text="Caught", manager=manager)
+        lbw = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,300), (20,20)), text="LBW", manager=manager)
+        runout = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,325), (20,20)), text="Run out", manager=manager)
+        stumped = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,350), (20,20)), text="Stumped", manager=manager)
+        retired = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,375), (20,20)), text="Retired", manager=manager)
+        hittwice = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,400), (20,20)), text="Hit twice", manager=manager)
+        hitwicket = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,425), (20,20)), text="Hit wicket", manager=manager)
+        obstructing = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,450), (20,20)), text="Obstructing the field", manager=manager)
+        timedout = pygame_gui.elements.UICheckBox(relative_rect=pygame.Rect((15,475), (20,20)), text="Timed out", manager=manager)
+        wicketList = [bowled, caught, lbw, runout, stumped, retired, hittwice, hitwicket, obstructing, timedout]
+        for box in wicketList:
+            box.disable()
+
+        pygame.draw.line(disp, "#25292e", (15, 505), (290, 505), 5)
+
+        submit = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((15,685), (275,50)), text="Enter runs from delivery", manager=manager)
+
+
 
         manager.draw_ui(disp)
         pygame.display.update()
@@ -56,6 +77,8 @@ class GUI():
             manager.update(time_delta)
             disp.fill(self.settings.bg_color)
             pygame.draw.rect(disp, (255,255,255), (305,5, 990, 740), 5)
+            pygame.draw.line(disp, "#25292e", (15, 240), (290, 240), 5)
+            pygame.draw.line(disp, "#25292e", (15, 505), (290, 505), 5)
             manager.draw_ui(disp)
             pygame.display.update()
 
@@ -79,6 +102,20 @@ class GUI():
                         noball.set_state(False)
                     elif event.ui_element == noball:
                         wide.set_state(False)
+                    elif event.ui_element == wicket:
+                        for box in wicketList:
+                            box.enable()
+                    elif event.ui_element in wicketList:
+                        for box in wicketList:
+                            if box != event.ui_element:
+                                box.set_state(False)
+
+                if event.type == pygame_gui.UI_CHECK_BOX_UNCHECKED:
+
+                    if event.ui_element == wicket:
+                        for box in wicketList:
+                            box.set_state(False)
+                            box.disable()
                     
                 manager.process_events(event)
                     
