@@ -33,7 +33,7 @@ class score(object):
         self.byes = 0
         self.overScore = 0
         
-        self.runs += startingRuns
+        self.runs += int(startingRuns)
     
         
     def runsScored(self, runType, runAmount):
@@ -42,27 +42,32 @@ class score(object):
             self.runs += runAmount
             self.overScore += runAmount
             
-        elif runType == 1:                  # Wide, could include byes
-            self.runs += runAmount
-            self.overScore += runAmount
-            self.extras += runAmount
+        elif runType == 1:                  # Wide
+            self.runs += (runAmount + self.extraRuns)
+            self.overScore += (runAmount + self.extraRuns)
+            self.extras += (runAmount + self.extraRuns)
             self.wides += 1
-            self.byes += (runAmount - self.self.extraRuns)
             
-        elif runType == 2:                  # No ball, could include byes
-            self.runs += runAmount
-            self.overScore += runAmount
-            self.extras += runAmount
+        elif runType == 2:                  # No ball with hit
+            self.runs += (runAmount + self.extraRuns)
+            self.overScore += (runAmount + self.extraRuns)
+            self.extras += (runAmount + self.extraRuns)
             self.noballs += 1
-            self.byes += (runAmount - self.self.extraRuns)
+
+        elif runType == 3:                  # No ball with byes
+            self.runs += (runAmount + self.extraRuns)
+            self.overScore += (runAmount + self.extraRuns)
+            self.extras += (runAmount + self.extraRuns)
+            self.noballs += 1
+            self.byes += runAmount
             
-        elif runType == 3:                  # Byes off a valid delivery
+        elif runType == 4:                  # Byes off a valid delivery
             self.runs += runAmount
             self.overScore += runAmount
             self.extras += runAmount
             self.byes += runAmount
             
-        elif runType == 4:                  # Penalty runs, won't go through ballBowled
+        elif runType == 5:                  # Penalty runs, won't go through ballBowled
             self.runs += runAmount
             
             

@@ -1,4 +1,5 @@
 import pygame_gui, pygame
+from scoring import score
 
 class Settings:
 
@@ -17,7 +18,7 @@ class GUI():
             (self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Cricket Scoring")
 
-    def run_start(self):
+    def run_start(self, scoreClass):
         disp = self.screen = pygame.display.set_mode(
             (self.settings.screen_width, self.settings.screen_height))
         background = pygame.Surface((self.settings.screen_width,self.settings.screen_height))
@@ -61,6 +62,8 @@ class GUI():
         wicketList = [bowled, caught, lbw, runout, stumped, retired, hittwice, hitwicket, obstructing, timedout]
         for box in wicketList:
             box.disable()
+        noBallWickets = [runout, retired, hittwice, obstructing, timedout]
+        wideWickets = [runout, stumped, retired, hitwicket, obstructing, timedout]
 
         pygame.draw.line(disp, "#25292e", (15, 505), (290, 505), 5)
 
@@ -95,16 +98,39 @@ class GUI():
                             runCounter -= 1
                     elif event.ui_element == plus:
                         runCounter += 1
+                    elif event.ui_element == submit:
+                        options = [wide.get_state(), noball.get_state(), bye.get_state()]
 
                 if event.type == pygame_gui.UI_CHECK_BOX_CHECKED:
 
                     if event.ui_element == wide:
                         noball.set_state(False)
+                        bye.set_state(False)
+                        bye.disable()
+                        if wicket.get_state():
+                            for box in wicketList:
+                                if box not in wideWickets:
+                                    box.set_state(False)
+                                    box.disable()
                     elif event.ui_element == noball:
                         wide.set_state(False)
+                        if wicket.get_state():
+                            for box in wicketList:
+                                if box not in noBallWickets:
+                                    box.set_state(False)
+                                    box.disable()
                     elif event.ui_element == wicket:
-                        for box in wicketList:
-                            box.enable()
+                        if noball.get_state():
+                            for box in noBallWickets:
+                                box.enable()
+                        elif wide.get_state():
+                            for box in wideWickets:
+                                box.enable()
+                        else:
+                            for box in wicketList:
+                                box.enable()
+
+                            
                     elif event.ui_element in wicketList:
                         for box in wicketList:
                             if box != event.ui_element:
@@ -116,6 +142,25 @@ class GUI():
                         for box in wicketList:
                             box.set_state(False)
                             box.disable()
+                    elif event.ui_element == wide:
+                        bye.enable()
+                        if wicket.get_state():
+                            for box in wicketList:
+                                box.enable()
+                            if noball.get_state():
+                                for box in wicketList:
+                                    if box not in noBallWickets:
+                                        box.set_state(False)
+                                        box.disable()
+                    elif event.ui_element == noball:
+                        if wicket.get_state():
+                            for box in wicketList:
+                                box.enable()
+                            if wide.get_state():
+                                for box in wicketList:
+                                    if box not in wideWickets:
+                                        box.set_state(False)
+                                        box.disable()
                     
                 manager.process_events(event)
                     
@@ -124,4 +169,4 @@ class GUI():
 def startScoring(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, inningsNum, bowlAgain, extraRuns):
     print(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, inningsNum, bowlAgain, extraRuns)       
     scorePage = GUI()
-    scorePage.run_start()
+    scorePage.run_start(score(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, inningsNum, bowlAgain, extraRuns))
