@@ -87,6 +87,11 @@ class GUI():
             pygame.draw.line(disp, "#25292e", (15, 240), (290, 240), 5)
             pygame.draw.line(disp, "#25292e", (15, 505), (290, 505), 5)
             manager.draw_ui(disp)
+
+            font = pygame.font.Font(None, 74)
+            textSurface = font.render((str(scoreClass.runs) + "/" + str(scoreClass.wickets) + " (" + str(scoreClass.overs / 10) + ")"), True, (255,255,255))
+            disp.blit(textSurface, (15, 520))
+
             pygame.display.update()
 
             runs.set_text(str(runCounter))
