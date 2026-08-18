@@ -76,6 +76,10 @@ class GUI():
 
         while running:
 
+            if scoreClass.inningsDoneCheck():
+                submit.disable()
+                print("Innings over")
+
             time_delta = clock.tick(60)/1000.0
             manager.update(time_delta)
             disp.fill(self.settings.bg_color)
@@ -86,6 +90,7 @@ class GUI():
             pygame.display.update()
 
             runs.set_text(str(runCounter))
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -98,8 +103,11 @@ class GUI():
                             runCounter -= 1
                     elif event.ui_element == plus:
                         runCounter += 1
+
                     elif event.ui_element == submit:
-                        options = [wide.get_state(), noball.get_state(), bye.get_state()]
+                        options = [wide.get_state(), noball.get_state(), bye.get_state(), wicket.get_state(), runCounter]
+                        inputToRunsScored(options, scoreClass)
+
 
                 if event.type == pygame_gui.UI_CHECK_BOX_CHECKED:
 
@@ -170,3 +178,19 @@ def startScoring(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, innin
     print(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, inningsNum, bowlAgain, extraRuns)       
     scorePage = GUI()
     scorePage.run_start(score(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, inningsNum, bowlAgain, extraRuns))
+
+
+def inputToRunsScored(options, scoreClass):
+
+    if options[0]:
+        scoreClass.ballBowled(1, options[4], options[3])
+    elif options[1] and options[2]:
+        scoreClass.ballBowled(2, options[4], options[3])
+    elif options[1] and not options[2]:
+        scoreClass.ballBowled(3, options[4], options[3])
+    elif options[2]:
+        scoreClass.ballBowled(4, options[4], options[3])
+    else:
+        scoreClass.ballBowled(0, options[4], options[3])
+
+    scoreClass.getScore()

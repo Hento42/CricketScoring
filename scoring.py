@@ -4,7 +4,7 @@ class score(object):
     
         self.runs = 0
         self.wickets = 0
-        self.overs = 0.0
+        self.overs = 0
         
         if gameType == "Fixed Wickets":
             self.gameType = 0
@@ -21,7 +21,7 @@ class score(object):
             self.bowlAgain = 2
             
         self.maxWickets = maxWickets
-        self.maxOvers = maxOvers
+        self.maxOvers = maxOvers * 10
         self.wicketRuns = wicketRuns
         self.startingRuns = int(startingRuns)
         self.inningsNum = int(inningsNum)
@@ -79,23 +79,21 @@ class score(object):
     def ballBowled(self, runType, runAmount, wicket):
         if self.gameType == 2:                              # In the Hundred format, overs are 5 balls
             if (runType != 2 and runType != 3) or self.bowlAgain == 1 or (self.bowlAgain == 2 and int(self.overs) != self.maxOvers):
-                if (self.overs % 1) == 0.4:
-                    self.overs += 0.6
+                if (self.overs % 10) == 4:
+                    self.overs += 6
                 else:
-                    self.overs += 0.1
+                    self.overs += 1
         else:                                               # 6 ball overs in all other formats
             if (runType != 2 and runType != 3) or self.bowlAgain == 1 or (self.bowlAgain == 2 and int(self.overs) != self.maxOvers):
-                if (self.overs % 1) == 0.5:
-                    self.overs += 0.5
+                if (self.overs % 10) == 5:
+                    self.overs += 5
                 else:
-                    self.overs += 0.1
+                    self.overs += 1
         
         if runAmount > 0:
             self.runsScored(runType, runAmount)
         if wicket:
             self.wicketTaken()
-            
-        return self.inningsDoneCheck()
             
     
     def inningsDoneCheck(self):
@@ -105,3 +103,7 @@ class score(object):
             return True
         else:
             return False
+
+
+    def getScore(self):
+        print(str(self.runs) + "/" + str(self.wickets) + " (" + str(self.overs / 10) + ")")
