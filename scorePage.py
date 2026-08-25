@@ -25,7 +25,6 @@ class GUI():
         width = self.settings.screen_width
         height = self.settings.screen_height
         runCounter = 0
-        symbols = {"wide":"+", "no ball":"o", "wicket":"W", "bye":"B"}
 
         self.screen.fill(self.settings.bg_color)
         pygame.display.update()
@@ -39,16 +38,18 @@ class GUI():
         pygame.draw.rect(disp, "#76787a", (305, 5, 1088, 740), 5)
 
         if scoreClass.maxOvers == 0 and scoreClass.gameType == 0:
-            noOverLimit(disp)
+            scoresheet = noOverLimit(disp)
         elif scoreClass.gameType == 2:
-            twentyOverLimit(disp)
+            scoresheet = twentyOverLimit(disp)
         else:
             if (scoreClass.maxOvers / 10) <= 10:
-                tenOverLimit(disp)
+                scoresheet = tenOverLimit(disp)
             elif (scoreClass.maxOvers / 10) <= 20:
-                twentyOverLimit(disp)
+                scoresheet = twentyOverLimit(disp)
             elif (scoreClass.maxOvers / 10) <= 50:
-                fiftyOverLimit(disp)
+                scoresheet = fiftyOverLimit(disp)
+
+        currentOver = ""
         
         runText = pygame_gui.elements.UITextBox(relative_rect=pygame.Rect((15,15), (270,40)), html_text="Enter runs scored (excluding extras):", manager=manager)
         minus = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((15,60), (50,50)), text="-1", manager=manager)
@@ -114,6 +115,8 @@ class GUI():
 
             pygame.draw.line(disp, "#25292e", (15, 240), (290, 240), 5)
             pygame.draw.line(disp, "#25292e", (15, 505), (290, 505), 5)
+            for i in range(len(scoresheet[0])):
+                disp.blit(scoresheet[0][i], scoresheet[1][i])
             manager.draw_ui(disp)
 
             font = pygame.font.Font(None, 74)
@@ -138,8 +141,18 @@ class GUI():
                         runCounter += 1
 
                     elif event.ui_element == submit:
+                        newFont = pygame.font.Font(None, 30)
+                        print(scoresheet)
                         options = [wide.get_state(), noball.get_state(), bye.get_state(), wicket.get_state(), runCounter]
-                        inputToRunsScored(options, scoreClass)
+                        overNum = scoreClass.overs // 10
+                        symbol, newOver = inputToRunsScored(options, scoreClass)
+                        currentOver += symbol + "  "
+                        scoresheet[0][overNum] = newFont.render((currentOver), True, (255,255,255))
+                        for i in range(len(scoresheet[0])):
+                            disp.blit(scoresheet[0][i], scoresheet[1][i])
+                        if newOver:
+                            currentOver = ""
+
 
 
                 if event.type == pygame_gui.UI_CHECK_BOX_CHECKED:
@@ -216,17 +229,18 @@ def startScoring(gameType, maxWickets, maxOvers, wicketRuns, startingRuns, innin
 def inputToRunsScored(options, scoreClass):
 
     if options[0]:
-        scoreClass.ballBowled(1, options[4], options[3])
-    elif options[1] and options[2]:
-        scoreClass.ballBowled(2, options[4], options[3])
+        symbol, newOver = scoreClass.ballBowled(1, options[4], options[3])
     elif options[1] and not options[2]:
-        scoreClass.ballBowled(3, options[4], options[3])
+        symbol, newOver = scoreClass.ballBowled(2, options[4], options[3])
+    elif options[1] and options[2]:
+        symbol, newOver = scoreClass.ballBowled(3, options[4], options[3])
     elif options[2]:
-        scoreClass.ballBowled(4, options[4], options[3])
+        symbol, newOver = scoreClass.ballBowled(4, options[4], options[3])
     else:
-        scoreClass.ballBowled(0, options[4], options[3])
+        symbol, newOver = scoreClass.ballBowled(0, options[4], options[3])
 
     scoreClass.getScore()
+    return symbol, newOver
 
 
 def noOverLimit(disp):
@@ -300,3 +314,10 @@ def tenOverLimit(disp):
     pygame.draw.line(disp, "#76787a", (305, 523), (1390, 523), 2)
     pygame.draw.line(disp, "#76787a", (305, 597), (1390, 597), 2)
     pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
+
+    newFont = pygame.font.Font(None, 30)
+    overScores = [[newFont.render((""), True, (255,255,255)) for x in range(10)], [(320, 35 + (74*y)) for y in range(10)]]
+    #print(overScores)
+    # for i in range(10):
+    #     disp.blit(overScores[0][i], overScores[1][i])
+    return overScores
