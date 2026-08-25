@@ -4,7 +4,7 @@ from scoring import score
 class Settings:
 
     def __init__(self):
-        self.screen_width = 1300
+        self.screen_width = 1400
         self.screen_height = 750
         self.bg_color = ("#141821")
 
@@ -25,6 +25,7 @@ class GUI():
         width = self.settings.screen_width
         height = self.settings.screen_height
         runCounter = 0
+        symbols = {"wide":"+", "no ball":"o", "wicket":"W", "bye":"B"}
 
         self.screen.fill(self.settings.bg_color)
         pygame.display.update()
@@ -35,7 +36,19 @@ class GUI():
         clock = pygame.time.Clock()
         running = True
 
-        pygame.draw.rect(disp, (255,255,255), (305, 5, 990, 740), 5)
+        pygame.draw.rect(disp, "#76787a", (305, 5, 1088, 740), 5)
+
+        if scoreClass.maxOvers == 0 and scoreClass.gameType == 0:
+            noOverLimit(disp)
+        elif scoreClass.gameType == 2:
+            twentyOverLimit(disp)
+        else:
+            if (scoreClass.maxOvers / 10) <= 10:
+                tenOverLimit(disp)
+            elif (scoreClass.maxOvers / 10) <= 20:
+                twentyOverLimit(disp)
+            elif (scoreClass.maxOvers / 10) <= 50:
+                fiftyOverLimit(disp)
         
         runText = pygame_gui.elements.UITextBox(relative_rect=pygame.Rect((15,15), (270,40)), html_text="Enter runs scored (excluding extras):", manager=manager)
         minus = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((15,60), (50,50)), text="-1", manager=manager)
@@ -84,7 +97,21 @@ class GUI():
             time_delta = clock.tick(60)/1000.0
             manager.update(time_delta)
             disp.fill(self.settings.bg_color)
-            pygame.draw.rect(disp, (255,255,255), (305,5, 990, 740), 5)
+            pygame.draw.rect(disp, "#76787a", (305, 5, 1088, 740), 5)
+
+            if scoreClass.maxOvers == 0 and scoreClass.gameType == 0:
+                noOverLimit(disp)
+            elif scoreClass.gameType == 2:
+                twentyOverLimit(disp)
+            else:
+                if (scoreClass.maxOvers / 10) <= 10:
+                    tenOverLimit(disp)
+                elif (scoreClass.maxOvers / 10) <= 20:
+                    twentyOverLimit(disp)
+                elif (scoreClass.maxOvers / 10) <= 50:
+                    fiftyOverLimit(disp)
+
+
             pygame.draw.line(disp, "#25292e", (15, 240), (290, 240), 5)
             pygame.draw.line(disp, "#25292e", (15, 505), (290, 505), 5)
             manager.draw_ui(disp)
@@ -200,3 +227,76 @@ def inputToRunsScored(options, scoreClass):
         scoreClass.ballBowled(0, options[4], options[3])
 
     scoreClass.getScore()
+
+
+def noOverLimit(disp):
+    pygame.draw.line(disp, "#76787a", (441, 5), (441, 740), 2)
+    pygame.draw.line(disp, "#76787a", (577, 5), (577, 740), 2)
+    pygame.draw.line(disp, "#76787a", (713, 5), (713, 740), 2)
+    pygame.draw.line(disp, "#76787a", (849, 5), (849, 740), 2)
+    pygame.draw.line(disp, "#76787a", (985, 5), (985, 740), 2)
+    pygame.draw.line(disp, "#76787a", (1121, 5), (1121, 740), 2)
+    pygame.draw.line(disp, "#76787a", (1257, 5), (1257, 740), 2)
+
+    pygame.draw.line(disp, "#76787a", (305, 42), (1390, 42), 2)
+    pygame.draw.line(disp, "#76787a", (305, 79), (1390, 79), 2)
+    pygame.draw.line(disp, "#76787a", (305, 116), (1390, 116), 2)
+    pygame.draw.line(disp, "#76787a", (305, 153), (1390, 153), 2)
+    pygame.draw.line(disp, "#76787a", (305, 190), (1390, 190), 2)
+    pygame.draw.line(disp, "#76787a", (305, 227), (1390, 227), 2)
+    pygame.draw.line(disp, "#76787a", (305, 264), (1390, 264), 2)
+    pygame.draw.line(disp, "#76787a", (305, 301), (1390, 301), 2)
+    pygame.draw.line(disp, "#76787a", (305, 338), (1390, 338), 2)
+    pygame.draw.line(disp, "#76787a", (305, 375), (1390, 375), 2)
+    pygame.draw.line(disp, "#76787a", (305, 412), (1390, 412), 2)
+    pygame.draw.line(disp, "#76787a", (305, 449), (1390, 449), 2)
+    pygame.draw.line(disp, "#76787a", (305, 486), (1390, 486), 2)
+    pygame.draw.line(disp, "#76787a", (305, 523), (1390, 523), 2)
+    pygame.draw.line(disp, "#76787a", (305, 560), (1390, 560), 2)
+    pygame.draw.line(disp, "#76787a", (305, 597), (1390, 597), 2)
+    pygame.draw.line(disp, "#76787a", (305, 634), (1390, 634), 2)
+    pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
+    pygame.draw.line(disp, "#76787a", (305, 708), (1390, 708), 2)
+
+
+def fiftyOverLimit(disp):
+    pygame.draw.line(disp, "#76787a", (532, 5), (532, 740), 2)
+    pygame.draw.line(disp, "#76787a", (741, 5), (741, 740), 2)
+    pygame.draw.line(disp, "#76787a", (959, 5), (959, 740), 2)
+    pygame.draw.line(disp, "#76787a", (1177, 5), (1177, 740), 2)
+
+    pygame.draw.line(disp, "#76787a", (305, 79), (1390, 79), 2)
+    pygame.draw.line(disp, "#76787a", (305, 153), (1390, 153), 2)
+    pygame.draw.line(disp, "#76787a", (305, 227), (1390, 227), 2)
+    pygame.draw.line(disp, "#76787a", (305, 301), (1390, 301), 2)
+    pygame.draw.line(disp, "#76787a", (305, 375), (1390, 375), 2)
+    pygame.draw.line(disp, "#76787a", (305, 449), (1390, 449), 2)
+    pygame.draw.line(disp, "#76787a", (305, 523), (1390, 523), 2)
+    pygame.draw.line(disp, "#76787a", (305, 597), (1390, 597), 2)
+    pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
+
+
+def twentyOverLimit(disp):
+    pygame.draw.line(disp, "#76787a", (849, 5), (849, 740), 2)
+
+    pygame.draw.line(disp, "#76787a", (305, 79), (1390, 79), 2)
+    pygame.draw.line(disp, "#76787a", (305, 153), (1390, 153), 2)
+    pygame.draw.line(disp, "#76787a", (305, 227), (1390, 227), 2)
+    pygame.draw.line(disp, "#76787a", (305, 301), (1390, 301), 2)
+    pygame.draw.line(disp, "#76787a", (305, 375), (1390, 375), 2)
+    pygame.draw.line(disp, "#76787a", (305, 449), (1390, 449), 2)
+    pygame.draw.line(disp, "#76787a", (305, 523), (1390, 523), 2)
+    pygame.draw.line(disp, "#76787a", (305, 597), (1390, 597), 2)
+    pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
+
+
+def tenOverLimit(disp):
+    pygame.draw.line(disp, "#76787a", (305, 79), (1390, 79), 2)
+    pygame.draw.line(disp, "#76787a", (305, 153), (1390, 153), 2)
+    pygame.draw.line(disp, "#76787a", (305, 227), (1390, 227), 2)
+    pygame.draw.line(disp, "#76787a", (305, 301), (1390, 301), 2)
+    pygame.draw.line(disp, "#76787a", (305, 375), (1390, 375), 2)
+    pygame.draw.line(disp, "#76787a", (305, 449), (1390, 449), 2)
+    pygame.draw.line(disp, "#76787a", (305, 523), (1390, 523), 2)
+    pygame.draw.line(disp, "#76787a", (305, 597), (1390, 597), 2)
+    pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
