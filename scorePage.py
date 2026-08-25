@@ -36,18 +36,29 @@ class GUI():
         running = True
 
         pygame.draw.rect(disp, "#76787a", (305, 5, 1088, 740), 5)
+        newFont = pygame.font.Font(None, 30)
 
         if scoreClass.maxOvers == 0 and scoreClass.gameType == 0:
             scoresheet = noOverLimit(disp)
+            maxLen = 14
+            maxLens = [[14, 20, 26, 32, 0],[24, 18, 12, 9, 0]]
         elif scoreClass.gameType == 2:
             scoresheet = twentyOverLimit(disp)
+            maxLen = 58
+            maxLens = [[58, 82, 106, 150, 0],[24, 18, 12, 9, 0]]
         else:
             if (scoreClass.maxOvers / 10) <= 10:
                 scoresheet = tenOverLimit(disp)
+                maxLen = 120
+                maxLens = [[120, 162, 214, 306, 0],[24, 18, 12, 9, 0]]
             elif (scoreClass.maxOvers / 10) <= 20:
                 scoresheet = twentyOverLimit(disp)
+                maxLen = 58
+                maxLens = [[58, 82, 106, 150, 0],[24, 18, 12, 9, 0]]
             elif (scoreClass.maxOvers / 10) <= 50:
                 scoresheet = fiftyOverLimit(disp)
+                maxLen = 24
+                maxLens = [[24, 32, 42, 60, 0],[24, 18, 12, 9, 0]]
 
         currentOver = ""
         
@@ -141,16 +152,17 @@ class GUI():
                         runCounter += 1
 
                     elif event.ui_element == submit:
-                        if scoreClass.maxOvers == 0 and scoreClass.gameType == 0:
-                            newFont = pygame.font.Font(None, 18)
-                        else:
-                            newFont = pygame.font.Font(None, 30)
-                        
-                        print(scoresheet)
+                        #print(scoresheet)
                         options = [wide.get_state(), noball.get_state(), bye.get_state(), wicket.get_state(), runCounter]
                         overNum = scoreClass.overs // 10
                         symbol, newOver = inputToRunsScored(options, scoreClass)
                         currentOver += symbol + " "
+                        print(maxLen)
+                        if len(currentOver) > maxLen and maxLen != 0:
+                            ind = maxLens[0].index(maxLen)
+                            newFont = pygame.font.Font(None, maxLens[1][ind])
+                            maxLen = maxLens[0][ind+1]
+                            print(maxLen)
                         scoresheet[0][overNum] = newFont.render((currentOver), True, (255,255,255))
                         for i in range(len(scoresheet[0])):
                             disp.blit(scoresheet[0][i], scoresheet[1][i])
@@ -276,9 +288,8 @@ def noOverLimit(disp):
     pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
     pygame.draw.line(disp, "#76787a", (305, 708), (1390, 708), 2)
 
-    newFont = pygame.font.Font(None, 18)
-    overScores = [[newFont.render(("Test"), True, (255,255,255)) for x in range(160)], [(315 + (136*z), 15 + (37*y)) for y in range(20) for z in range (8)]]
-    print(overScores)
+    newFont = pygame.font.Font(None, 30)
+    overScores = [[newFont.render((""), True, (255,255,255)) for x in range(160)], [(315 + (136*z), 15 + (37*y)) for y in range(20) for z in range (8)]]
     return overScores
 
 
@@ -300,7 +311,6 @@ def fiftyOverLimit(disp):
 
     newFont = pygame.font.Font(None, 30)
     overScores = [[newFont.render((""), True, (255,255,255)) for x in range(50)], [(320 + (227*z), 35 + (74*y)) for y in range(10) for z in range (5)]]
-    print(overScores)
     return overScores
 
 
