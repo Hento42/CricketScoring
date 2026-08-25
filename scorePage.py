@@ -141,12 +141,16 @@ class GUI():
                         runCounter += 1
 
                     elif event.ui_element == submit:
-                        newFont = pygame.font.Font(None, 30)
+                        if scoreClass.maxOvers == 0 and scoreClass.gameType == 0:
+                            newFont = pygame.font.Font(None, 18)
+                        else:
+                            newFont = pygame.font.Font(None, 30)
+                        
                         print(scoresheet)
                         options = [wide.get_state(), noball.get_state(), bye.get_state(), wicket.get_state(), runCounter]
                         overNum = scoreClass.overs // 10
                         symbol, newOver = inputToRunsScored(options, scoreClass)
-                        currentOver += symbol + "  "
+                        currentOver += symbol + " "
                         scoresheet[0][overNum] = newFont.render((currentOver), True, (255,255,255))
                         for i in range(len(scoresheet[0])):
                             disp.blit(scoresheet[0][i], scoresheet[1][i])
@@ -272,6 +276,11 @@ def noOverLimit(disp):
     pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
     pygame.draw.line(disp, "#76787a", (305, 708), (1390, 708), 2)
 
+    newFont = pygame.font.Font(None, 18)
+    overScores = [[newFont.render(("Test"), True, (255,255,255)) for x in range(160)], [(315 + (136*z), 15 + (37*y)) for y in range(20) for z in range (8)]]
+    print(overScores)
+    return overScores
+
 
 def fiftyOverLimit(disp):
     pygame.draw.line(disp, "#76787a", (532, 5), (532, 740), 2)
@@ -289,6 +298,11 @@ def fiftyOverLimit(disp):
     pygame.draw.line(disp, "#76787a", (305, 597), (1390, 597), 2)
     pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
 
+    newFont = pygame.font.Font(None, 30)
+    overScores = [[newFont.render((""), True, (255,255,255)) for x in range(50)], [(320 + (227*z), 35 + (74*y)) for y in range(10) for z in range (5)]]
+    print(overScores)
+    return overScores
+
 
 def twentyOverLimit(disp):
     pygame.draw.line(disp, "#76787a", (849, 5), (849, 740), 2)
@@ -303,6 +317,11 @@ def twentyOverLimit(disp):
     pygame.draw.line(disp, "#76787a", (305, 597), (1390, 597), 2)
     pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
 
+    newFont = pygame.font.Font(None, 30)
+    overScores = [[newFont.render((""), True, (255,255,255)) for x in range(20)], [(320 + (545*z), 35 + (74*y)) for y in range(10) for z in range (2)]]
+    return overScores
+
+
 
 def tenOverLimit(disp):
     pygame.draw.line(disp, "#76787a", (305, 79), (1390, 79), 2)
@@ -315,9 +334,6 @@ def tenOverLimit(disp):
     pygame.draw.line(disp, "#76787a", (305, 597), (1390, 597), 2)
     pygame.draw.line(disp, "#76787a", (305, 671), (1390, 671), 2)
 
-    newFont = pygame.font.Font(None, 30)
+    newFont = pygame.font.Font(None, 20)
     overScores = [[newFont.render((""), True, (255,255,255)) for x in range(10)], [(320, 35 + (74*y)) for y in range(10)]]
-    #print(overScores)
-    # for i in range(10):
-    #     disp.blit(overScores[0][i], overScores[1][i])
     return overScores
