@@ -78,20 +78,18 @@ class score(object):
                          
     def ballBowled(self, runType, runAmount, wicket):
         if self.gameType == 2:                              # In the Hundred format, overs are 5 balls
-            if (runType != 2 and runType != 3) or self.bowlAgain == 1 or (self.bowlAgain == 2 and int(self.overs) != self.maxOvers):
+            if (runType != 1 and runType != 2 and runType != 3) or self.bowlAgain == 1 or (self.bowlAgain == 2 and int(self.overs) != self.maxOvers):
                 if (self.overs % 10) == 4:
                     self.overs += 6
                 else:
                     self.overs += 1
         else:                                               # 6 ball overs in all other formats
-            if (runType != 2 and runType != 3) or self.bowlAgain == 1 or (self.bowlAgain == 2 and int(self.overs) != self.maxOvers):
+            if (runType != 1 and runType != 2 and runType != 3) or self.bowlAgain == 1 or (self.bowlAgain == 2 and int(self.overs) != self.maxOvers):
                 if (self.overs % 10) == 5:
                     self.overs += 5
                 else:
                     self.overs += 1
-        
-        if runAmount > 0:
-            self.runsScored(runType, runAmount)
+        self.runsScored(runType, runAmount)
         if wicket:
             self.wicketTaken()
             

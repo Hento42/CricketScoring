@@ -79,6 +79,7 @@ class GUI():
             if scoreClass.inningsDoneCheck():
                 submit.disable()
                 print("Innings over")
+                running = False
 
             time_delta = clock.tick(60)/1000.0
             manager.update(time_delta)
